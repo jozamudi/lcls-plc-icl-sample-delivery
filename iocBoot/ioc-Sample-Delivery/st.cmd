@@ -3,18 +3,17 @@
 #
 #         Project: lcls-plc-icl-sample-delivery.tsproj
 #        PLC name: sample_delivery (sample_delivery Instance)
-# Generated using: pytmc 2.15.1
-# Project version: 6192c07
-#    Project hash: 6192c073ab6dccf17076ebfc5fb6d83dad8faeb9
+# Generated using: pytmc 2.16.0
+# Project version: fd579f0
+#    Project hash: fd579f0cd506bd72d209287a66dc2f5f6f1fb6bc
 #     PLC IP/host: plc-sds-raptor (Specified in Makefile; project has: 172.21.38.26)
 #      PLC Net ID: 172.21.38.26.1.1 (Specified in Makefile; project has: 172.21.38.26.1.1)
-# ** DEVELOPMENT MODE IOC **
-# * Using IOC boot directory for autosave.
-# * Archiver settings will not be configured.
+#  ** Production mode IOC **
+#  Using /cds/data/iocData for autosave and archiver settings.
 #
 # Libraries:
 #
-#   lcls-twincat-sample-delivery: * (SLAC)
+#   lcls-twincat-sample-delivery: * -> 0.0.1 (SLAC)
 #   Tc2_Standard: * (Beckhoff Automation GmbH)
 #   Tc2_System: * (Beckhoff Automation GmbH)
 #   Tc3_Module: * (Beckhoff Automation GmbH)
@@ -28,6 +27,9 @@ epicsEnvSet("ENGINEER", "jozamudi" )
 epicsEnvSet("LOCATION", "PLC:ICL:IOC" )
 epicsEnvSet("IOCSH_PS1", "$(IOC)> " )
 epicsEnvSet("ACF_FILE", "$(ADS_IOC_TOP)/iocBoot/templates/unrestricted.acf")
+
+# Run common startup commands for linux soft IOC's
+< /reg/d/iocCommon/All/pre_linux.cmd
 
 # Register all support components
 dbLoadDatabase("$(ADS_IOC_TOP)/dbd/adsIoc.dbd")
@@ -83,10 +85,10 @@ dbLoadRecords("TwinCAT_TaskInfo.db", "PORT=$(ASYN_PORT),PREFIX=PLC:ICL:IOC,IDX=1
 dbLoadRecords("TwinCAT_TaskInfo.db", "PORT=$(ASYN_PORT),PREFIX=PLC:ICL:IOC,IDX=2")
 dbLoadRecords("TwinCAT_AppInfo.db", "PORT=$(ASYN_PORT), PREFIX=PLC:ICL:IOC")
 
-dbLoadRecords("TwinCAT_Project.db", "PREFIX=PLC:ICL:IOC,PROJECT=lcls-plc-icl-sample-delivery.tsproj,HASH=6192c07,VERSION=6192c07,PYTMC=2.15.1,PLC_HOST=plc-sds-raptor")
+dbLoadRecords("TwinCAT_Project.db", "PREFIX=PLC:ICL:IOC,PROJECT=lcls-plc-icl-sample-delivery.tsproj,HASH=fd579f0,VERSION=fd579f0,PYTMC=2.16.0,PLC_HOST=plc-sds-raptor")
 
-#   lcls-twincat-sample-delivery: * (SLAC)
-dbLoadRecords("TwinCAT_Dependency.db", "PREFIX=PLC:ICL:IOC,DEPENDENCY=lcls-twincat-sample-delivery,VERSION=*,VENDOR=SLAC")
+#   lcls-twincat-sample-delivery: * -> 0.0.1 (SLAC)
+dbLoadRecords("TwinCAT_Dependency.db", "PREFIX=PLC:ICL:IOC,DEPENDENCY=lcls-twincat-sample-delivery,VERSION=0.0.1,VENDOR=SLAC")
 #   Tc2_Standard: * (Beckhoff Automation GmbH)
 dbLoadRecords("TwinCAT_Dependency.db", "PREFIX=PLC:ICL:IOC,DEPENDENCY=Tc2_Standard,VERSION=*,VENDOR=Beckhoff Automation GmbH")
 #   Tc2_System: * (Beckhoff Automation GmbH)
@@ -109,14 +111,21 @@ save_restoreSet_DatedBackupFiles(1)
 set_pass0_restoreFile("info_positions.sav")
 set_pass1_restoreFile("info_settings.sav")
 
-# ** Development IOC Settings **
-# Development IOC autosave and archive files go in the IOC top directory:
-cd "$(IOC_TOP)"
+# ** Production IOC Settings **
+set_savefile_path("$(IOC_DATA)/$(IOC)/autosave")
+set_requestfile_path("$(IOC_DATA)/$(IOC)/autosave")
 
-# (Development mode) Create info_positions.req and info_settings.req
+# Production IOC autosave files go in iocData:
+cd "$(IOC_DATA)/$(IOC)/autosave"
+
+# Create info_positions.req and info_settings.req
 makeAutosaveFiles()
-# (Development mode) Create the archiver file
+
+cd "$(IOC_DATA)/$(IOC)/archive"
+
+# Create $(IOC).archive
 makeArchiveFromDbInfo("$(IOC).archive", "archive")
+cd "$(IOC_TOP)"
 
 # Configure access security: this is required for caPutLog.
 asSetFilename("$(ACF_FILE)")
@@ -141,4 +150,7 @@ caPutLogInit("$(EPICS_CAPUTLOG_HOST):$(EPICS_CAPUTLOG_PORT)", 0)
 # Start autosave backups
 create_monitor_set( "info_positions.req", 10, "" )
 create_monitor_set( "info_settings.req", 60, "" )
+
+# All IOCs should dump some common info after initial startup.
+< /reg/d/iocCommon/All/post_linux.cmd
 

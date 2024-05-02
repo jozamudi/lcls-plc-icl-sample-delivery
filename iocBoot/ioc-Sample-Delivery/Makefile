@@ -2,7 +2,7 @@ IOC_TOP=/reg/g/pcds/epics/ioc/common/ads-ioc/R0.6.1
 IOC_INSTANCE_PATH := $(shell pwd)
 
 # Set PRODUCTION_IOC to 1 to move from a testing to a production IOC:
-PRODUCTION_IOC := 0
+PRODUCTION_IOC := 1
 
 PROJECT_NAME := lcls-plc-icl-sample-delivery
 PROJECT_PATH := ../../lcls-plc-icl-sample-delivery/lcls-plc-icl-sample-delivery.tsproj
