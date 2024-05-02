@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<TcEventSources Version="2">
+	<Source>
+		<GUID>{97CF8247-B59C-4E2C-B4B0-7350D0471457}</GUID>
+		<Name LcId="1033">Log event</Name>
+		<Event>
+			<Id>0</Id>
+			<Message LcId="1033">Critical</Message>
+		</Event>
+		<Event>
+			<Id>1</Id>
+			<Message LcId="1033">Error</Message>
+		</Event>
+		<Event>
+			<Id>2</Id>
+			<Message LcId="1033">Warning</Message>
+		</Event>
+		<Event>
+			<Id>3</Id>
+			<Message LcId="1033">Info</Message>
+		</Event>
+		<Event>
+			<Id>4</Id>
+			<Message LcId="1033">Verbose</Message>
+		</Event>
+	</Source>
+</TcEventSources>

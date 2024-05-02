@@ -16,7 +16,7 @@
     <Implicit_Jitter_Distribution>{6101365d-d211-455f-ba1c-6635a9ee9e30}</Implicit_Jitter_Distribution>
     <LibraryReferences>{f49c84fe-ae25-45eb-a272-e3fcdb68551c}</LibraryReferences>
     <CombineIds>false</CombineIds>
-    <Released>true</Released>
+    <Released>false</Released>
     <Company>SLAC</Company>
     <ProjectVersion>0.0.0</ProjectVersion>
     <Title>lcsl-plc-icl-sample-delivery</Title>
@@ -73,11 +73,19 @@
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <PlaceholderResolution Include="LCLS General">
+      <Resolution>LCLS General, 2.10.0 (SLAC)</Resolution>
+    </PlaceholderResolution>
+    <PlaceholderResolution Include="lcls-twincat-sample-delivery">
+      <Resolution>lcls-twincat-sample-delivery, 0.0.1 (SLAC)</Resolution>
+    </PlaceholderResolution>
+  </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-  <Data>
-    <o xml:space="preserve" t="OptionKey">
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{8F99A816-E488-41E4-9FA3-846536012284}</v>
@@ -132,13 +140,13 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-  </Data>
-  <TypeList>
-    <Type n="Hashtable">System.Collections.Hashtable</Type>
-    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-    <Type n="String">System.String</Type>
-  </TypeList>
-</XmlArchive>
+        </Data>
+        <TypeList>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>
